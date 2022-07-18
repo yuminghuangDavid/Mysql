@@ -1,0 +1,58 @@
+# Mysql （navicat）
+
+例子：建立一个管理学生信息的表格
+
+## 1.建立表结构
+
+create  table student(                                               //create table + 表名 ()创建一个表格
+   stuid int not null auto_increment primary key,     //stuid是表名，int代表该列表是int类型，not null 的意思是改列是非空字段，auto_increment
+   stuname varchar(200),                                             是自增的意思，primary key是主键，一般一个表里面id就是主键
+   stustatus varchar(100)                                          //varchar是字符类型，括号后面的是字符的最大长度
+);
+
+提示：primary key主键约束是一个列或者列的组合，其值能唯一地标识表中的每一行。这样的一列或多列称为表的主键，通过它可以强制表的实体完整性。
+
+create table grade(
+   gradeid int not null auto_increment primary key,
+   stuid int not null,
+   gradecourse varchar(100),
+   gradescore varchar(100)
+);
+
+
+//执行以上操作之后，右键"表"点击更新就可以获得两张表student和grade
+
+## 2.增加数据
+
+insert into student (stuname,stustatus) values ("hhd",'Sick');            //insert into是固定的插入语句，student是要插入的表格的名称，()里面是要
+insert into student (stuname,stustatus) values ("hym",'Healthy');         插入的值，要和后面的values()一一对应
+
+## 3.删除数据
+
+delete from student where stuid = 1;          //delete from是固定语句，student是在student里面删除，where是限定条件，也就是删除特定的一行
+
+truncate table student     //清空表内的数据并且重置自增字段，就是说你要再增加数据，他的stuid就是从1开始
+delete from student        //清除所有数据但是不会重置自增字段
+drop table student         //直接把表删除连带里面所有数据
+
+## 4.修改
+
+update student set stuname = 'ljf',stustatus = 'Missing girl' where stuid = 3; 
+
+//updata + 表格名称 + set + 要修改的属性 + where + 限制条件
+
+## 5.查询
+
+select * from student                                      //从student表格里查询所有的数据，*和linux里面一样就是所有的意思
+
+select * from student where stuid = 2;           //where是限制条件，就是查询student表格中stuid = 2的整行数据，
+
+select stuname,stustatus from student where stuid = 2; //这个就不是查询整行了，只查询 stuname,stustatus
+
+select stuname,student.stuid,gradecourse,gradescore from student,grade where student.stuid = 2;
+//在student,grade 表中查询 stuname,student.stuid,gradecourse,gradescore stuid前面加上student是因为两个表都有stuid这个属性，所以指代不清
+所以我们要表名stuid是哪里来的
+
+### 查询表里数据的条数：
+
+select count(*) from student; //就是一共有几个数据
